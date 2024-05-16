@@ -1,13 +1,22 @@
 :root{
-    --colorPrimario: rgb(240, 240, 240);
-    --colorCards:  rgb(253, 253, 253);
-    --colorFondo:  rgb(242, 245, 255);
-    --colorFondoCarril:  rgb(235, 235, 235);
+    --colorTextTitular: rgb(240, 240, 240);
+    --colorCards:  #fafafa;
+    --colorAcento:  #E74D0B;
+    --colorFondo: #3c484a;
+    --colorFondoEngadirTareas: #777B80;
+    --colorFondoCarril: #B1BCC1;
+    --colorChevron:#777B80;
     --textTitular: rgb(240, 240, 240);
+    --textCabeceras: 18px;
+    --colorTextCabeceras: #3C484A;
+    --textProyecto: 18px;
+    --colortextProyecto: rgb(110, 110, 110);
+    
+    --textDescrip: 10px;
   } 
   
   * {
-    font-family: "Roboto", sans-serif; 
+    font-family: "Lato", sans-serif;
     /* border: solid 1px black; */
   }
   
@@ -15,17 +24,25 @@
     display: none !important;
   }
 
-  body{
-   
+  body{   
     background-color: var(--colorFondo);
     margin-left: 5%;
     margin-right: 5%;
+    
   }
 
   h1,h2{
     font-family: Arial, Helvetica, sans-serif;
-    text-align: center;   
-   
+    text-align: center;      
+  }
+
+  h1{
+    color: var(--textTitular);
+  }
+
+  h2{
+    font-size: var(--textCabeceras);
+    color: var(--colorTextCabeceras);
   }
 
 header,
@@ -40,29 +57,63 @@ main,
 
 #add-task-container{
     display: flex;
-    gap:8px;
-    background-color: var(--colorFondoCarril);   
+    gap:12px;
+    background-color: var(--colorFondoEngadirTareas); 
+    width: 28%;  
+    padding: 16px;
+    border-radius: 8px;
    
 }
+
 
 #lists-container{
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 24px;
 }
 .cabecera{
   background-color: var(--colorCards);
   margin-bottom: 4%;
   width: 100%;
+  box-shadow: 0px 2px 4px 0px #29272730;
+  border-radius: 4px;
 }
 
 #add-task-input{
-    border-radius: 8px;
+    border-radius: 4px;
     text-align: center;    
   }
 
+#add-project-input,
+#add-title-input,
+#add-description-input{
+  width: 98%;
+  align-self: center;
+  border-radius: 4px;
+  border: none;
+  height: 24px;
+}
+
 #add-description-input{
     height: 40px;
+}
+
+
+#add-task-btn{
+  margin-top: 8px;
+  width: 40%;
+  align-self: center;
+  background-color: var(--colorAcento);
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 32px;  
+  cursor: pointer;
+  margin-left: 1%;
+  color: antiquewhite;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  
 }
 
 #to-do-container,
@@ -77,28 +128,70 @@ main,
   
 }
 
-#add-task-btn{
-    border-style: none;
-    border: solid 2px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-left: 1%;
-  }
+
 
 .task{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 90%;
     margin-bottom: 2%;
-    cursor: pointer;
+    /* cursor: pointer; */
     background-color: var(--colorCards);
+    box-shadow: 6px 6px 4px 0px #41414120;
+    /*Primer parametro desplazamiento en el eje x
+    Segundo parametro desplazamiento en el eje y
+    Tercer parámetro dureza de del borde
+    Cuarto parámetro crecimiento de la sombra
+    Color exadecimal, las dos ultimas cifras corresponden a la luminosidad
+    esta va de transparente 00 a ff totalmente opaco*/    
+    border-radius: 4px;
+
+    border-left: 4px solid red;
+
 }
+
+
+
 
 .proyect,
 .title,
-.task-description,
-.chevron_left{
-    margin-top: 2%;
+.task-description{
+    /* margin-top: 1%; */
    margin-left: 4%;
+   color: var(--textCabeceras);
 }
 .proyect{
   margin-top: 4%;
+  font-size: var(--colorChevron);
+  
+  font-weight: lighter;
+}
+.title{
+  margin-top: 4%;
+  font-weight: bold;
+ 
+}
+.task-description{
+  margin-top: 2%;
+  
+}
+
+
+
+.trash {
+  margin-top: 2%;
+  margin-right: 2%;
+  align-self: self-end; 
+}
+.chevron_right{
+  align-self: self-end;
+  margin-bottom: 8px;
+  color: var(--colorChevron);
+  cursor: pointer;
+}
+.chevron_left{
+  align-self: self-start;
+  color: var(--colorChevron);
+  cursor: pointer;
 }
