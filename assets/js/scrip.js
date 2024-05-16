@@ -36,11 +36,20 @@ function addTask() {
     erase.addEventListener('click', deleteTask);
 
     //Aqui creamos los hijos que cuelgan del taskDiv  
-    taskDiv.appendChild(createDate());//En este hijo llamamos a la funcion que crea una fecha justo cuando se hace crea la tarea
+    //En este hijo llamamos a la funcion que crea una fecha justo cuando se hace crea la tarea
+    
+    let divHeadCard=document.createElement("div");
+    divHeadCard.className= "head-card";
+    divHeadCard.appendChild(createDate());
+    divHeadCard.appendChild(erase);
+    taskDiv.appendChild(divHeadCard);   
+    
     taskDiv.appendChild(createProjectName(inputProjet.value));//En este hijo llamamos a la funcion que cera el nombre del proyecto
     taskDiv.appendChild(createTitleTask(inputTitle.value));//En esta la que crea el titulo de la tarea
-    taskDiv.appendChild(createDescriptionTask(inputDescription.value));//Y la que crea la descripcion
-   
+    let descriptionTask= document.createElement("div");
+    descriptionTask.className="task-description";
+    descriptionTask.appendChild(createDescriptionTask(inputDescription.value));//Y la que crea la descripcion
+    taskDiv.appendChild(descriptionTask);
     //Creamos los iconos y los metemos en variables
     let markLeft= createChevronLeft();
     let markRight= createChevronRight();
@@ -120,10 +129,10 @@ function createTitleTask(titleTask) {
     return div;
 }
 function createDescriptionTask(descriptionTask) {
-    let div = document.createElement("div");
-    div.className = "task-description";
-    div.innerText = descriptionTask;
-    return div;
+    let paragraph = document.createElement("p");
+    paragraph.className = "paragraph-decription";
+    paragraph.textContent = descriptionTask;
+    return paragraph;
 }
 
 function createChevronLeft() {

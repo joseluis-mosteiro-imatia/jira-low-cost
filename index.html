@@ -18,7 +18,7 @@
         <div id="add-task-container">
             <input id="add-project-input" type="text" placeholder="Añade el proyecto"  maxlength="50"/>           
             <input id="add-title-input" type="text" placeholder="Añade titulo de la tarea"  maxlength="50"/>         
-            <input id="add-description-input" type="texarea-text" rows="10" placeholder="Añade una descripcion"  maxlength="150"/>           
+            <input id="add-description-input" type="texarea-text" rows="10" placeholder="Añade una descripcion"  maxlength="160"/>           
             <button id="add-task-btn">Añadir tarea</button>
         </div>
         <div id="lists-container">
@@ -30,8 +30,8 @@
                     <div  class="proyect">Proyecto x</div>
                     <div  class="title">Titulo tarea 4</div>
                     <div  class="task-description">Descripcion</div>
-                    <span class="material-symbols-outlined ">chevron_left</span>
-                    <span class="material-symbols-outlined">chevron_right</span>
+                    <span class="material-symbols-outlined chevron_left">chevron_left</span>
+                    <span class="material-symbols-outlined chevron_right">chevron_right</span>
                 </div>
             </div>
             <div id="in-progress-container" data-status="2">
@@ -41,9 +41,13 @@
                     <span class="material-symbols-outlined trash">delete</span>
                     <div  class="proyect">Proyecto x</div>
                     <div  class="title">Titulo tarea 3</div>
-                    <div  class="task-description">Descripcion</div>
+                    <div  class="task-description">
+                        <p class="paragraph-decription">Descripcion</p>
+                    </div>
+                    <div class="arrows">
                     <span class="material-symbols-outlined chevron_left">chevron_left</span>
                     <span class="material-symbols-outlined chevron_right">chevron_right</span>
+                    </div>
                 </div>
                 <div class="task">
                     <div  class="date">fecha</div>
@@ -51,8 +55,8 @@
                     <div  class="proyect">Proyecto x</div>
                     <div  class="title">Titulo tarea 2</div>
                     <div  class="task-description">Descripcion</div>
-                    <span class="material-symbols-outlined ">chevron_left</span>
-                    <span class="material-symbols-outlined">chevron_right</span>
+                    <span class="material-symbols-outlined chevron_left">chevron_left</span>
+                    <span class="material-symbols-outlined chevron_right">chevron_right</span>
                 </div>             
                
             </div>
@@ -64,8 +68,8 @@
                     <div  class="proyect">Proyecto x</div>
                     <div  class="title">Titulo tarea 1</div>
                     <div  class="task-description">Descripcion</div>
-                    <span class="material-symbols-outlined ">chevron_left</span>
-                    <span class="material-symbols-outlined">chevron_right</span>
+                    <span class="material-symbols-outlined chevron_left">chevron_left</span>
+                    <span class="material-symbols-outlined chevron_right">chevron_right</span>
                 </div>          
             </div>
         </div>
