@@ -44,9 +44,14 @@ function addTask() {
     //Creamos los iconos y los metemos en variables
     let markLeft= createChevronLeft();
     let markRight= createChevronRight();
+    //Creo otro div para meter las flechitas
+    let divArrows= document.createElement("div");
+    divArrows.className= "arrows";
+
     //Le colgamos al pater dos hijos mas con los iconos de derecha e izquierda
-    taskDiv.appendChild(markLeft);
-    taskDiv.appendChild(markRight);
+    divArrows.appendChild(markLeft);
+    divArrows.appendChild(markRight);
+    taskDiv.appendChild(divArrows);
     //Le asignamos un listener al icono para que cuando hagamos clic se cambie de carril
    
     markRight.classList.toggle("hidden");
