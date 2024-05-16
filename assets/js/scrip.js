@@ -15,8 +15,7 @@ function addTask() {
     //Avisos para el usuario con respecto a los campos sin cubrir
     if(inputProjet.value.length == 0 ) {
         alert("Debes introducir el proyecto vinculado a la tarea");
-        return;
-        
+        return;        
     }
     if(inputTitle.value.length == 0 ) {
         alert("Debes introducir el título de la tarea");
@@ -37,12 +36,11 @@ function addTask() {
     erase.addEventListener('click', deleteTask);
 
     //Aqui creamos los hijos que cuelgan del taskDiv  
+    taskDiv.appendChild(createDate());//En este hijo llamamos a la funcion que crea una fecha justo cuando se hace crea la tarea
     taskDiv.appendChild(createProjectName(inputProjet.value));//En este hijo llamamos a la funcion que cera el nombre del proyecto
     taskDiv.appendChild(createTitleTask(inputTitle.value));//En esta la que crea el titulo de la tarea
     taskDiv.appendChild(createDescriptionTask(inputDescription.value));//Y la que crea la descripcion
    
-  
-
     //Creamos los iconos y los metemos en variables
     let markLeft= createChevronLeft();
     let markRight= createChevronRight();
@@ -50,18 +48,28 @@ function addTask() {
     taskDiv.appendChild(markLeft);
     taskDiv.appendChild(markRight);
     //Le asignamos un listener al icono para que cuando hagamos clic se cambie de carril
-    markRight.addEventListener('click', function(event){
-        var currentStatus = event.target.parentNode.dataset.status;
-        var newStatus= (currentStatus == 2)? 3:2;
-        moveTask(this.parentNode, newStatus);
-         
-    });
+   
+    markRight.classList.toggle("hidden");
+    markRight.addEventListener('click',function(){
+        if(toDoContainer.contains(taskDiv)){
+            inProgressContainer.appendChild(taskDiv);
+            markLeft.classList.toggle("hidden");           
+        }else if (inProgressContainer.contains(taskDiv)){
+            doneContainer.appendChild(taskDiv);   
+            markRight.classList.toggle("hidden");                 
+        }
+    });  
+    markLeft.addEventListener('click',function(){
 
-    markLeft.addEventListener('click', function(event){       
-       var currentStatus = event.target.parentNode.dataset.status;
-       var newStatus= (currentStatus == 2)? 1:2;
-       moveTask(this.parentNode, newStatus);
+        if(doneContainer.contains(taskDiv)){
+            inProgressContainer.appendChild(taskDiv);
+            markRight.classList.toggle("hidden");
+        }else if (inProgressContainer.contains(taskDiv)){
+            toDoContainer.appendChild(taskDiv);
+            markLeft.classList.toggle("hidden");  
+        }
     });
+   
      //creamos un objeto task
      let task = new Task(inputProjet.value, inputTitle.value, inputDescription.value, 1);
      //Vaciamos los inputs para el siguente uso
@@ -72,32 +80,19 @@ function addTask() {
     // Guarda el objeto Task en el almacenamiento local
     localStorage.setItem(task.id, JSON.stringify(task));
     // Asigna un ID único al div de la tarea
-    taskDiv.id = task.id;  
-    taskDiv.dataset.status = 1;
+    taskDiv.id = task.id;      
      // Agrega el div de la tarea al contenedor de tareas pendientes     
     toDoContainer.appendChild(taskDiv) 
     }  
   
 }
 
-function moveTask(taskDiv,newStatus){
-    taskDiv.parentNode.removeChild(taskDiv);
-    taskDiv.dataset.status= newStatus;
 
-    switch(newStatus){
-        case 1:
-            toDoContainer.appendChild(taskDiv);
-            break;
-        case 2:
-            inProgressContainer.appendChild(taskDiv);
-            break;
-        case 3:
-            toDoContainer.appendChild(taskDiv);
-            break;
-        default:
-            toDoContainer.appendChild(taskDiv);    
-    }
-
+function createDate(){    
+    let dateCreationTask= document.createElement("span");
+    dateCreationTask.className="date";
+    dateCreationTask.innerText= new Date().toLocaleDateString();
+    return dateCreationTask;
 }
 
 function deleteTask() {
@@ -135,7 +130,7 @@ function createChevronLeft() {
 
 function createChevronRight() {
     let span = document.createElement("span");
-    span.className = "material-symbols-outlined chevron_right"
+    span.className = "material-symbols-outlined chevron_right hidden"
     span.innerText = "chevron_right";
     return span
 }
@@ -153,7 +148,7 @@ function Task(projectName, titleTask, descriptionTask, taskStatus) {
     this.titleTask = titleTask;
     this.descriptionTask = descriptionTask;
     this.taskStatus = taskStatus;
-    this.taskCreate = new Date();
+    this.createDate = new Date();
     this.id = crypto.randomUUID();
 }
 

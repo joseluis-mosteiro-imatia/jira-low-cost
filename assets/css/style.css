@@ -10,6 +10,7 @@
     --textCabeceras: 18px;
     --colorTextCabeceras: #3C484A;
     --textProyecto: 18px;
+    --textDate: 14px;
     --colortextProyecto: rgb(110, 110, 110);
     
     --textDescrip: 10px;
@@ -65,7 +66,6 @@ main,
    
 }
 
-
 #lists-container{
     display: flex;
     flex-direction: row;
@@ -98,7 +98,6 @@ main,
     height: 40px;
 }
 
-
 #add-task-btn{
   margin-top: 8px;
   width: 40%;
@@ -128,17 +127,23 @@ main,
   
 }
 
+.date{
+  font-size: var(--textDate);
+  color: var(--colorChevron);
+}
 
-
-.task{
+.task{   
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
     width: 90%;
     margin-bottom: 2%;
-    /* cursor: pointer; */
+    cursor: pointer;
     background-color: var(--colorCards);
     box-shadow: 6px 6px 4px 0px #41414120;
+    overflow: hidden;
+    word-wrap: break-word;
     /*Primer parametro desplazamiento en el eje x
     Segundo parametro desplazamiento en el eje y
     Tercer parámetro dureza de del borde
@@ -146,13 +151,8 @@ main,
     Color exadecimal, las dos ultimas cifras corresponden a la luminosidad
     esta va de transparente 00 a ff totalmente opaco*/    
     border-radius: 4px;
-
     border-left: 4px solid red;
-
 }
-
-
-
 
 .proyect,
 .title,
@@ -176,22 +176,30 @@ main,
   margin-top: 2%;
   
 }
-
-
-
 .trash {
   margin-top: 2%;
   margin-right: 2%;
   align-self: self-end; 
+  color: var(--colorAcento);
+  cursor: pointer;
 }
+
+.material-symbols-outlined{
+  margin:0 5px
+}
+
 .chevron_right{
+  display: inline-flex;
   align-self: self-end;
+  align-items: baseline;
   margin-bottom: 8px;
   color: var(--colorChevron);
   cursor: pointer;
 }
 .chevron_left{
+  display:inline-flex;
   align-self: self-start;
+  align-items: baseline;
   color: var(--colorChevron);
   cursor: pointer;
 }
