@@ -1,0 +1,288 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+.hidden {
+  display: none !important;
+}
+
+* {
+  font-family: "Poetsen One", sans-serif;
+  /* border: 1px solid black; */
+}
+
+body {
+  /* background-color: #ebe9e9; */
+  /* background-image: radial-gradient(#777676 1.1px, #ebe9e9 1.1px);
+  background-size: 22px 22px; */
+  background-color: #fafafa;
+  margin: 10px;
+  margin-bottom: 40px;
+  max-width: 100%;
+}
+
+header {
+  display: flex;
+  margin: auto;
+  text-align: center;
+}
+#add-project-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #5d6d7e;
+  border-radius: 4px;
+}
+
+header {
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  background-color: #e7e7e9;
+  margin-bottom: 50px;
+  padding: 5px 20px;
+  border-radius: 4px;
+  width: 300px;
+  text-align: center;
+  justify-content: center;
+}
+
+h2 {
+  margin-left: 10px;
+  background-color: #ebe9e9;
+  height: 30px;
+  width: 130px;
+}
+#name-container {
+  display: flex;
+  justify-content: center;
+}
+#name-container input {
+  border-radius: 5px;
+  width: 500px;
+  padding: 8px;
+  margin: 15px;
+  gap: 10px;
+}
+#description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+  width: 220px;
+}
+
+#description-project-input {
+  margin: 5px;
+  border-radius: 4px;
+}
+#button-container {
+  align-content: center;
+  padding-bottom: 5px;
+}
+
+#create-project-btn {
+  font-size: x-large;
+  width: 250px;
+  height: 45px;
+  margin: 5px;
+  border-radius: 4px;
+  background-color: #5d6d7e;
+}
+
+#projects-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 400px;
+  gap: 20px;
+  max-height: 100%;
+  margin-bottom: 30px;
+}
+
+#todo-project-container,
+#inprocess-project-container,
+#done-project-container {
+  /* Esto es equivalente a flex-grow: 1, flex-shrink: 1, y flex-basis: 0 */
+  /* flex: 1; */
+  width: 32%;
+
+  position: relative;
+  border-radius: 6px;
+  padding-top: 90px;
+  margin: 0px auto;
+  margin-top: 40px;
+}
+
+#todo-project-container {
+  background-color: #f06292;
+}
+#inprocess-project-container {
+  background-color: #ffcccc;
+}
+#done-project-container {
+  background-color: #ccffcc;
+}
+
+#todo-project-container h2,
+#inprocess-project-container h2,
+#done-project-container h2 {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  width: 160px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  padding: 8px;
+  position: relative;
+  height: 125px;
+  margin: 10px;
+  gap: 5px;
+  background-color: whitesmoke;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project-name {
+  width: 70%;
+  min-height: 15%;
+  background-color: #e1dede;
+  background-color: rgb(237, 234, 234);
+  overflow: hidden;
+  /* white-space: nowrap; Evita el salto de línea */
+  text-overflow: ellipsis;
+  padding: 3px;
+  border-radius: 2px;
+}
+.project-title {
+  width: 70%;
+  min-height: 15%;
+  overflow: hidden;
+  background-color: rgb(237, 234, 234);
+  overflow: hidden;
+  /* white-space: nowrap; Evita el salto de línea */
+  text-overflow: ellipsis;
+  padding: 3px;
+  border-radius: 2px;
+  /* max-height: 100%; */
+}
+.project-description {
+  width: 70%;
+  overflow: hidden;
+  background-color: rgb(237, 234, 234);
+  overflow: hidden;
+  /* white-space: nowrap; Evita el salto de línea */
+  padding: 3px;
+  text-overflow: ellipsis;
+  max-height: 50%;
+  border-radius: 2px;
+}
+.trash {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  font-size: 30px;
+  font-size: 40px !important;
+}
+
+.trash:hover {
+  color: red;
+  cursor: pointer;
+  font-size: 42px !important;
+}
+
+.arrowLeft {
+  color: red;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  font-size: 50px !important;
+}
+
+.arrowRight {
+  color: green;
+  position: absolute;
+  right: 0px;
+  bottom: 10px;
+  cursor: pointer;
+  font-size: 50px !important;
+}
+.arrowLeft:hover,
+.arrowRight:hover {
+  opacity: 50%;
+  font-size: 54px !important;
+}
+
+/* .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+} */
+
+footer {
+  position: absolute;
+  background-color: #e1dede;
+  padding: 8px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 20px;
+  margin-top: 300px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.popup {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: fixed; /*Fixed mantiene la posición relativa respecto a la ventana del navegador */
+  top: 50%; /* Coloca el borde superior del pop-up en el 50% de la altura de la ventana */
+  left: 50%; /* Coloca el borde izquierdo del pop-up en el 50% del ancho de la ventana */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Transform ajusta el pop-up al centro exacto */
+}
+.popup .project-name,
+.popup .project-title,
+.popup .project-description {
+  margin: auto;
+  width: 94%;
+  height: auto;
+  padding: 5px;
+  border-radius: 6px;
+}
+.popup .project {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding-bottom: 70px;
+  word-wrap: break-word;
+}
+.close {
+  color: red;
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+  cursor: pointer;
+  font-size: 50px !important;
+}
