@@ -20,7 +20,7 @@ function Project(projectTitle, projectName, projectDescription) {
     this.projectDescription = projectDescription;
     this.projectDone = 0;
     this.projectCreate = new Date();
-    this.id = crypto.randomUUID();
+    this.id = "project-" + crypto.randomUUID();
 
     // this.getTitle = function () {
     //     return this.projectTitle;
@@ -105,29 +105,30 @@ function handleDrop(event) {
     var projectId = event.dataTransfer.getData("text");
     let projectString = localStorage.getItem(projectId);
     let projectObj = JSON.parse(projectString);
-    
-    var projectDiv = document.getElementById(projectId);
-    var targetContainer = event.target;
-    
-    targetId = targetContainer.id;
-    
-    if  (targetId === "todo-project-container") {
-        todoContainer.appendChild(projectDiv);
-        projectObj.projectDone = 0;
-    }
-    
-    if  (targetId === "inprocess-project-container") {
-        inProcessContainer.appendChild(projectDiv);
-        projectObj.projectDone = 1;
-    }
-    if  (targetId === "done-project-container") {
-        doneContainer.appendChild(projectDiv);
-        projectObj.projectDone = 2;
-    }  
-    // let projectId = targetContainer.parentNode.id;
-    
-    showStateArrow(projectId, targetId);
-    localStorage.setItem(projectId, JSON.stringify(projectObj));
+    if((projectObj.id).includes("project-")){
+        var projectDiv = document.getElementById(projectId);
+        var targetContainer = event.target;
+        
+        targetId = targetContainer.id;
+        
+        if  (targetId === "todo-project-container") {
+            todoContainer.appendChild(projectDiv);
+            projectObj.projectDone = 0;
+        }
+        
+        if  (targetId === "inprocess-project-container") {
+            inProcessContainer.appendChild(projectDiv);
+            projectObj.projectDone = 1;
+        }
+        if  (targetId === "done-project-container") {
+            doneContainer.appendChild(projectDiv);
+            projectObj.projectDone = 2;
+        }  
+        // let projectId = targetContainer.parentNode.id;
+        
+        showStateArrow(projectId, targetId);
+        localStorage.setItem(projectId, JSON.stringify(projectObj));
+}
     
 }
 
@@ -157,18 +158,19 @@ function showStateArrow(projectId, containerId){
     let projectDiv = document.getElementById(projectId);
     let projectString = localStorage.getItem(projectId);
     let projectObj = JSON.parse(projectString);
-    
-    if(containerId == "todo-project-container"){
-        projectDiv.children[0].classList.add('hidden');
-        projectDiv.children[4].classList.remove('hidden');
-    }else if(containerId == "inprocess-project-container"){
-        projectDiv.children[0].classList.remove('hidden');
-        projectDiv.children[4].classList.remove('hidden');
-    }else{
-        projectDiv.children[0].classList.remove('hidden');
-        projectDiv.children[4].classList.add('hidden');
+    if((projectObj.id).includes("project-")){
+        if(containerId == "todo-project-container"){
+            projectDiv.children[0].classList.add('hidden');
+            projectDiv.children[4].classList.remove('hidden');
+        }else if(containerId == "inprocess-project-container"){
+            projectDiv.children[0].classList.remove('hidden');
+            projectDiv.children[4].classList.remove('hidden');
+        }else{
+            projectDiv.children[0].classList.remove('hidden');
+            projectDiv.children[4].classList.add('hidden');
+        }
+        localStorage.setItem(projectId, JSON.stringify(projectObj));
     }
-    localStorage.setItem(projectId, JSON.stringify(projectObj));
 }
  
 // function projectState(){
@@ -204,38 +206,40 @@ function projectStateForward() {
     let projectId = this.parentNode.id;
     let projectString = localStorage.getItem(projectId);
     let projectObj = JSON.parse(projectString);
-
-    if(projectObj.projectDone == 0){
-        projectObj.projectDone = 1;
-        this.parentNode.children[0].classList.toggle("hidden");
-        inProcessContainer.appendChild(this.parentNode);   
-    }else if(projectObj.projectDone == 1){
-        projectObj.projectDone = 2;
-        this.parentNode.children[4].classList.toggle("hidden");
-        doneContainer.appendChild(this.parentNode);
-    }else {
-        window.alert("No se puede ir más allá");
+    if((projectObj.id).includes("project-")){
+        if(projectObj.projectDone == 0){
+            projectObj.projectDone = 1;
+            this.parentNode.children[0].classList.toggle("hidden");
+            inProcessContainer.appendChild(this.parentNode);   
+        }else if(projectObj.projectDone == 1){
+            projectObj.projectDone = 2;
+            this.parentNode.children[4].classList.toggle("hidden");
+            doneContainer.appendChild(this.parentNode);
+        }else {
+            window.alert("No se puede ir más allá");
+        }
+        localStorage.setItem(projectId, JSON.stringify(projectObj));
     }
-    localStorage.setItem(projectId, JSON.stringify(projectObj));
 }
 
 function projectStateBackward(){
     let projectId = this.parentNode.id;
     let projectString = localStorage.getItem(projectId);
     let projectObj = JSON.parse(projectString);
-
-    if(projectObj.projectDone == 2){
-        projectObj.projectDone = 1;
-        this.parentNode.children[4].classList.toggle("hidden");
-        inProcessContainer.appendChild(this.parentNode);       
-    }else if(projectObj.projectDone == 1){
-        projectObj.projectDone = 0;
-        this.parentNode.children[0].classList.toggle("hidden");
-        todoContainer.appendChild(this.parentNode);
-    }else {
-        window.alert("No se puede ir más allá");
+    if((projectObj.id).includes("project-")){
+        if(projectObj.projectDone == 2){
+            projectObj.projectDone = 1;
+            this.parentNode.children[4].classList.toggle("hidden");
+            inProcessContainer.appendChild(this.parentNode);       
+        }else if(projectObj.projectDone == 1){
+            projectObj.projectDone = 0;
+            this.parentNode.children[0].classList.toggle("hidden");
+            todoContainer.appendChild(this.parentNode);
+        }else {
+            window.alert("No se puede ir más allá");
+        }
+        localStorage.setItem(projectId, JSON.stringify(projectObj));
     }
-    localStorage.setItem(projectId, JSON.stringify(projectObj));
 }
 
 
@@ -273,13 +277,15 @@ function deleteProject() {
 function recoverTaskFromLocalStorage() {
     for (let i = 0; i < localStorage.length; i++) {
         let projectObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        let projectHTML = createRecoveredProjectFromLocalStorage(projectObj);
-        if (projectObj.projectDone == 2) {
-            doneContainer.appendChild(projectHTML);
-        }else if(projectObj.projectDone == 1){
-            inProcessContainer.appendChild(projectHTML);
-        } else {
-            todoContainer.appendChild(projectHTML);
+        if((projectObj.id).includes("project-")){
+            let projectHTML = createRecoveredProjectFromLocalStorage(projectObj);
+            if (projectObj.projectDone == 2) {
+                doneContainer.appendChild(projectHTML);
+            }else if(projectObj.projectDone == 1){
+                inProcessContainer.appendChild(projectHTML);
+            } else {
+                todoContainer.appendChild(projectHTML);
+            }
         }
     }
 }
@@ -341,8 +347,10 @@ function openProject(event){
     // Agregar el elemento clonado al popup
     popup.appendChild(enlargedProject);
     // Agregar el popup al body del documento
-    document.body.appendChild(popup);
+    if(document.body.children.id != "popup"){
 
+    }
+    document.body.appendChild(popup);
 }
 function createCloseIcon() {
     let span = document.createElement("span");
