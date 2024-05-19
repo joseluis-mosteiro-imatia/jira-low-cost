@@ -184,8 +184,7 @@ function recoverTaskFromLocalStorage() {
             inProgressContainer.appendChild(taskHTML);
         }else if(taskObj.taskDone){
             doneContainer.appendChild(taskHTML);
-        }
-  
+        } 
     }
 }
 
@@ -213,8 +212,8 @@ function createRecoveredTaskFromLocalStorage(taskObj) {
             markLeft.classList.toggle("hidden");
             taskObj.taskTodo=false;
             taskObj.taskinProgress=true;
-        } else if (inProgressContainer.contains(taskDiv)) {
-            doneContainer.appendChild(taskDiv);
+        } else if (inProgressContainer.contains(div)) {
+            doneContainer.appendChild(div);
             markRight.classList.toggle("hidden");           
             taskObj.taskinProgress=false;
             taskObj.taskDone=true;

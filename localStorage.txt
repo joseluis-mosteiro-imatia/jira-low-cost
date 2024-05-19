@@ -92,6 +92,7 @@ PASOS A SEGUIR
      function createRecoveredTaskFromLocalStorage(taskObj){ <-- Le pasamos el objeto de la tarea
         let div= document.createElement("div");
         div.className = "task"; 
+        div.id = taskObj.id;
         let mark = createMarkAsDoneIcon() <--creamo el icono de done
         div.appendChild(mark);
         mark.addEventListener('click', markAsDone);
