@@ -1,0 +1,116 @@
+1. LOCALSTORAGE
+
+El almacenamiento local es una propiedad solo de lectura que ofrece un objeto llamado window que nos permite almacenar 
+informacion, no tiene fecha de "caducidad", no expira
+
+<Se utiliza
+    localStorage.setItem("miGato", "Finn") una clave-valor para almacenarlo
+    localStorage.getItem("miGato") para recuperarlo usamos la clave para recuperalo
+    localStorage.removeItem("miGato") para eliminarlo
+    localStorage.clear(); para borrar todo
+
+Necesitariamos un array de tareas pendientes, otro en proceso y otro completadas
+La propia funcion que nos permite moverlas de carril tambien nos debería dejar moverlas de array
+LocalStorage solo nos permite utilizar cadenas
+Transformamos todo a JSON -->(JSON.stringify())
+Lo metemos en un array
+El array lo transformamos a String
+
+PASOS A SEGUIR
+--> Primero crearemos la clase tarea
+--> Despues en addTask creamos una tarea
+        let task = new Task(inputProjet.value, inputTitle.value, inputDescription.value);
+  
+--> La tarea que hemos creado es un objeto que guarda informacion
+--> Debemos vincular la tarea que hemos creado en javascript con el html y los estilos que hemos creado
+--> Al tener que vincularlo necesitamos hacerlo através de los ids pq tenemos que poder recuperar la informacion
+      del estatus de la tarea, si esta en pendientes, proceso, o hechas, lo hacemos con el crypto.randomUUID()
+         taskDiv.id = task.id;
+  
+--> Para almacenarlas en localStorage tengo primero que convertirlas en String con JSON.stringify()
+      y despues debes decirle que quieres recuperar los datos, en este caso el objeto tarea. 
+      Así cuando lo tenga guardado en localStorage puedo cargarlo y ponerlo otra vez en la aplicacion y cuando cierre
+      la pagina y la vuelva a abrir me lo vuelva a leer y si añado una tarea nueva esta se añade al localStorage
+        localStorage.setItem(task.id, JSON.stringify(task));
+
+--> Para recuperar esos datos y volver a convertirlos en objeto debo usar JSON.parse();    
+      
+-->Para recuperar del localStorage por el id
+        localStorage.getItem(divLoquesea.parentNode.id);--Me recupera la tarea por el id
+    --Esto lo convierto en un objeto para utilizarlo
+            var obj = JSON.parse(localStorage.getItem(divLoquesea.parentNode.id));
+      --Si luego le hago algun cambio
+            obj.taskDone=true;
+      --Al volver a guardarlo tengo que volver a convertirlo en string
+            localStorage.setItem(obj.id,JSON.stringify(obj));      
+
+--> Ejemplo, la funcion el el todo de 
+
+    mark.addEventListener ('click', function(){
+        this.classList.toggle("hidden");
+        doneContainer.appendChild(this.parentNode);
+        this.parentNode.children[1].classList.toggle("hidden");
+
+        let taskId = this.parentNode.id; <--Guardo el id del objeto
+        let taskString = localStorage.getItem(taskId); <--Recupero el objeto por el id y viene en formato string
+        let taskObj = JSON.parse(taskString); <-- Lo parseo para convertirlo en objeto
+        taskObj.taskDone = true; <-- Le cambiamos el valor a true (hecho)
+        localStorage.setItem(taskId, JSON.stringify(taskObj)); <-- Lo vuelvo a pasar a String para almacenarlo en localStorage
+        localStorage.removeItem(taskId);
+    })   
+
+--> Necesitamos recorrer un mapa para que me devuelva el localStorage entero
+    for(let i=0; i< localStorage.length;i++){
+        console.log(localStorage.getItem(localStorage.key(i)));<--dame la clave en la posicion i asi obtengo los ids y con ellos los items, las tareas
+    }         
+
+--> Ahora deberíamos hacer una funcion que cuando me cargue la pagina me vaya al localStorage y si length es
+    mayor que cero (que tiene datos) me los represente en pantalla. Lo que no puedo reproducir con ella son
+    los eventos que tenían vinculados, para ello tendría que hacer una funcion que nos cargue añadir una tarea
+    Sería un metodo muy similar al de addTask pero sería añadir una tarea desde localStorage
+
+-->La funcion para recuperar las tareas desde localStorage
+    
+     
+    
+    
+    function recoverTaskFromLocalStorage(){
+         for(let i=0; i< localStorage.length;i++){
+            console.log(localStorage.getItem(localStorage.key(i)));<--comprobacion en consola
+            let taskObj = JSON.parse(localStorage.getItem(localStorage.key(i)));<--Lo cambiamos a objeto
+            let taskHTML = createRecoveredTaskFromLocalStorage(taskObj); <--Llamo a este item, este me va a devolver un DIV y lo meto en la variable 
+            if (taskObj.taskDone){ <--Si taskObj está hecho
+                doneContainer.appendChild(taskHTML);<--le decimos que lo cuelge del padre doneContainer
+            }else{
+                toDoContainer.appendChild(taskHTML); <--Si taskObj no está hecho que lo cuelge del padre toDoContainer
+            }
+         }
+
+    }
+
+
+     function createRecoveredTaskFromLocalStorage(taskObj){ <-- Le pasamos el objeto de la tarea
+        let div= document.createElement("div");
+        div.className = "task"; 
+        let mark = createMarkAsDoneIcon() <--creamo el icono de done
+        div.appendChild(mark);
+        mark.addEventListener('click', markAsDone);
+        let unmark = createMarkAsToDoIcon() <--creamo el icono de todo
+        div.appendChild(unmark);
+        unmark.addEventListener('click', markAsNotDone);
+        if (taskObj.taskDone != false) {
+            mark.classList.toggle("hidden");
+            unmark.classList.toggle("hidden");
+        }
+        div.appendChild(createTaskName(taskObj.taskName));<--Aqui creamos el div que llama a funcion crear nombre y le pasamos por parametro el nombre de la tarea del objeto
+        if (taskObj.taskLimit != '') {
+            let limit = createLimitDate(taskObj.taskLimit)
+            div.appendChild(limit);
+        }
+        let erase = createTrashIcon();
+        div.appendChild(erase);
+        erase.addEventListener('click', deleteTask);
+        return div;
+
+    }
+
