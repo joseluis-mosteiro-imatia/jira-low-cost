@@ -9,6 +9,10 @@ var doneContainer = document.getElementById("done-container");
 
 btnAddtask.addEventListener('click', addTask);//En los eventListener las funciones se invocan sin parentesis
 
+toDoContainer.addEventListener('dragenter', e =>{
+    console.log('Drag enter');
+});
+
 
 
 function addTask() {
@@ -66,23 +70,49 @@ function addTask() {
         //Le asignamos unos listeners a los iconos para que cuando hagamos clic se cambie de carril
         markRight.classList.toggle("hidden");
         markRight.addEventListener('click', function () {
+            let taskId = this.parentNode.id; //obtengo el id de la tarea
+            let taskString = localStorage.getItem(taskId);//recupera la tarea del localStorage usando el Id
+            let taskObj= JSON.parse(taskString);//parsea la tarea para convertirla de string a objeto
+
             if (toDoContainer.contains(taskDiv)) {
                 inProgressContainer.appendChild(taskDiv);
                 markLeft.classList.toggle("hidden");
+                taskObj.taskTodo=false;
+                taskObj.taskinProgress=true;//marco la tarea como en progreso
+                taskObj.taskDone=false;
+                
+               
+
             } else if (inProgressContainer.contains(taskDiv)) {
                 doneContainer.appendChild(taskDiv);
-                markRight.classList.toggle("hidden");
+                markRight.classList.toggle("hidden");                
+                taskObj.taskTodo=false;
+                taskObj.taskinProgress=false;
+                taskObj.taskDone=true;
+                
             }
+            localStorage.setItem(taskId, JSON.stringify(taskObj));//guarda la tarea actualizada en localStorage
         });
         markLeft.addEventListener('click', function () {
+            let taskId = this.parentNode.id;
+            let taskString = localStorage.getItem(taskId);
+            let taskObj= JSON.parse(taskString);
 
             if (doneContainer.contains(taskDiv)) {
                 inProgressContainer.appendChild(taskDiv);
                 markRight.classList.toggle("hidden");
+                taskObj.taskTodo=false;
+                taskObj.taskinProgress=true;
+                taskObj.taskDone=false;  
+
             } else if (inProgressContainer.contains(taskDiv)) {
                 toDoContainer.appendChild(taskDiv);
                 markLeft.classList.toggle("hidden");
+                taskObj.taskTodo=false;
+                taskObj.taskinProgress=false;
+                taskObj.taskDone=true;
             }
+            localStorage.setItem(taskId, JSON.stringify(taskObj));
         });
 
         //Creamos un objeto task
@@ -174,13 +204,15 @@ function Task(projectName, titleTask, descriptionTask) {
     this.taskDone = false;
 }
 
+
+//Por esta funcion solo pasaría si tiene elementos en localStorage que recuperar
 function recoverTaskFromLocalStorage() {
     for (let i = 0; i < localStorage.length; i++) {
-        let taskObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        let taskHTML = createRecoveredTaskFromLocalStorage(taskObj);
-        if(taskObj.taskTodo){
+        let taskObj = JSON.parse(localStorage.getItem(localStorage.key(i)));//Para cada clave obtiene y parsea la tarea almacenada
+        let taskHTML = createRecoveredTaskFromLocalStorage(taskObj); //La funcion me devuelve los elementos html necesarios para la tarea utilizando los datos del objeto tarea
+        if(taskObj.taskTodo){ //el elemento html se añade al contenedor correspondiente segun el estado de la tarea          
             toDoContainer.appendChild(taskHTML);
-        }else if (taskObj.taskinProgress){
+        }else if (taskObj.taskinProgress){        
             inProgressContainer.appendChild(taskHTML);
         }else if(taskObj.taskDone){
             doneContainer.appendChild(taskHTML);
@@ -188,14 +220,22 @@ function recoverTaskFromLocalStorage() {
     }
 }
 
-function createRecoveredTaskFromLocalStorage(taskObj) {
+
+function createRecoveredTaskFromLocalStorage(taskObj) {   
     let div = document.createElement('div');
     div.className = "task";
-    div.id = taskObj.id; 
+    div.id = taskObj.id;  
+    let divHeadCard = document.createElement("div");
+    divHeadCard.className = "head-card";
+    divHeadCard.appendChild(createDate());
 
     let erase = createTrashIcon();
     div.appendChild(erase);    
     erase.addEventListener('click', deleteTask);
+    
+    div.appendChild(createProjectName(taskObj.projectName));  
+    div.appendChild(createTitleTask(taskObj.titleTask));  
+    div.appendChild(createDescriptionTask(taskObj.descriptionTask));  
 
     let divArrows = document.createElement("div");
     divArrows.className = "arrows";
@@ -220,7 +260,7 @@ function createRecoveredTaskFromLocalStorage(taskObj) {
         }
     });
     markLeft.addEventListener('click', function () {
-        if (doneContainer.contains(div)) {
+        if (doneContainer.contains(div)) { 
             inProgressContainer.appendChild(div);
             markRight.classList.toggle("hidden");
             taskObj.taskDone=false;
@@ -231,7 +271,9 @@ function createRecoveredTaskFromLocalStorage(taskObj) {
             taskObj.taskinProgress=false;
             taskObj.taskTodo=true;
         }
-    });      
+    });   
+    
+    
 
     return div;
 }
