@@ -230,12 +230,16 @@ function createRecoveredTaskFromLocalStorage(taskObj) {
     divHeadCard.appendChild(createDate());
 
     let erase = createTrashIcon();
-    div.appendChild(erase);    
+    divHeadCard.appendChild(erase);
+    div.appendChild(divHeadCard);   
     erase.addEventListener('click', deleteTask);
     
     div.appendChild(createProjectName(taskObj.projectName));  
     div.appendChild(createTitleTask(taskObj.titleTask));  
-    div.appendChild(createDescriptionTask(taskObj.descriptionTask));  
+    let descriptionTask = document.createElement("div");
+    descriptionTask.className = "task-description";
+    descriptionTask.appendChild(createDescriptionTask(taskObj.descriptionTask)); 
+    div.appendChild(descriptionTask); 
 
     let divArrows = document.createElement("div");
     divArrows.className = "arrows";
@@ -271,9 +275,7 @@ function createRecoveredTaskFromLocalStorage(taskObj) {
             taskObj.taskinProgress=false;
             taskObj.taskTodo=true;
         }
-    });   
-    
-    
+    });         
 
     return div;
 }
