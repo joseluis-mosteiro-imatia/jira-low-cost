@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- FUENTE DE TÍTULO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <!-- FUENTE GENERAL -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>JIRATUTTI</title>
 </head>
-<body>
-    
+<body onload="recoverTaskFromLocalStorage()">
+    <header>
+        <h1><span id="h1-1">JIRA</span><span id="h1-2">TUTTI</span></h1>
+    </header>
+    <main id="main">
+        <div class="inp-tasks-container" id="inp-tasks-container">
+            <input type="text" id="inp-project-name" placeholder="Nombre del proyecto">
+            <input type="text" id="inp-task-name" placeholder="Nombre de la tarea">
+            <input type="text" id="inp-task-description" placeholder="Descripción de la tarea">
+            <button id="btn-create-task">Crear Jira-Tarea</button>
+        </div>
+
+        <div id="error-container">
+            <div id="error-div"></div>
+        </div>
+
+        
+        <div class="tasks-container">
+            <div id="not-done-task-container">
+                <h2>NOT DONE</h2>
+            </div>
+            <div id="in-progress-task-container">
+                <h2>IN PROGRESS</h2>
+            </div>
+            <div id="done-task-container">
+                <h2>DONE</h2>
+            </div>
+        </div>
+    </main>
+    <footer>
+        Creado por el EQUIPO 4. ¡Samanté! <img src="assets/images/Berto-Romero.jpg" id="berto-romero" alt="Berto-Romero" height="50px">
+    </footer>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

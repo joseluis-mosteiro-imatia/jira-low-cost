@@ -1,0 +1,202 @@
+* {
+    /* border: 1px solid black; */
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-image: linear-gradient(white, rgba(255, 0, 0, 0.6));
+    background-size: 100%;
+    height: 100%;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    color: red;
+    font-family: "Caveat Brush", cursive;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 70px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body > * {
+    flex-shrink: 0;
+}
+
+main,
+footer {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#h1-1 {
+    color: black;
+    text-shadow: -1px 0 rgb(255, 0, 0), 0 1px rgb(255, 0, 0), 1px 0 rgb(255, 0, 0), 0 -1px rgb(255, 0, 0);
+}
+
+#btn-create-task {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#error-container {
+    display: flex;
+    justify-content: center;
+}
+
+#error-div {
+    max-width: fit-content;
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    border-radius: 5px;
+    margin-top: 18px;
+    min-height: 19px;
+}
+
+h2 {
+    font-family: "Caveat Brush", cursive;
+    font-size: 35px;
+}
+
+.inp-tasks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+}
+
+#not-done-task-container,
+#in-progress-task-container,
+#done-task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 3px groove rgba(222, 222, 222, 0.5);
+    margin: 20px;
+    min-width: 256px;
+}
+
+.task {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 8px outset rgba(222, 222, 222, 0.8);
+    padding: 10px;
+    margin: 10px;
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 200px;
+
+}
+
+.task:hover {
+    background-color: rgba(239, 239, 239, 0.9);
+    border: 8px inset rgba(222, 222, 222, 0.8);
+}
+
+.project-name-task {
+    color: red;
+    font-weight: bold;
+}
+
+.task-name-task {
+    font-weight: 600;
+}
+
+.task-desc-task {
+    text-align: justify;
+    hyphens: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width:100%;
+    min-height: 90px;
+    margin-bottom: 10px;
+}
+
+.task-date-task {
+    color: gray;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.left-arrow,
+.right-arrow {
+    position: absolute;
+    bottom: 0;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.35));
+}
+
+.left-arrow {
+    left: 0%;
+}
+
+.right-arrow {
+    right: 0%;
+}
+
+.trash {
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 42%;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.35));
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    transition: 0.15s;
+    filter: contrast(150%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.50));
+}
+
+.trash:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    transition: 0.15s;
+    filter: saturate(100) contrast(150%) brightness(200%) drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.50));
+}
+
+footer {
+    font-weight: bolder;
+    font-style: italic;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-shadow: 2px 2px 3px black;
+}
+
+#berto-romero {
+    box-shadow: 2px 2px 3px black;
+    margin-right: 10px;
+}
