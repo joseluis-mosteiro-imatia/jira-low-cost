@@ -16,8 +16,13 @@ body {
   /* background-color: #ebe9e9; */
   /* background-image: radial-gradient(#777676 1.1px, #ebe9e9 1.1px);
   background-size: 22px 22px; */
-  background-color: #fafafa;
-  margin: 10px;
+  /* background-color: #fafafa; */
+  /* background-color: #1c1c1c; */
+  /* background-color: #1e1e1e; */
+  /* background-color: #424949; */
+  background-color: #2c2c2c;
+  margin: auto;
+  padding: 10px;
   margin-bottom: 40px;
   max-width: 100%;
 }
@@ -32,9 +37,13 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: max-content;
+  /* width: 100%; */
   gap: 5px;
-  border: 1px solid #5d6d7e;
-  border-radius: 4px;
+  border: 1px solid #000000;
+  /* background-color: #2c2c2c; */
+  background-color: #424949;
+  border-radius: 6px;
 }
 
 header {
@@ -44,13 +53,15 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: space-around;
+  align-items: center;
 }
 
 h1 {
   background-color: #e7e7e9;
-  margin-bottom: 50px;
-  padding: 5px 20px;
+  margin-bottom: 20px;
+  padding: 5px 10px;
   border-radius: 4px;
   width: 300px;
   text-align: center;
@@ -71,7 +82,8 @@ h2 {
   border-radius: 5px;
   width: 500px;
   padding: 8px;
-  margin: 15px;
+  margin: 10px;
+  margin-bottom: 0px;
   gap: 10px;
 }
 #description-container {
@@ -79,12 +91,14 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 12px;
-  width: 220px;
+  margin: -10px;
 }
 
+#description-container label {
+  color: whitesmoke;
+}
 #description-project-input {
-  margin: 5px;
+  margin: 3px;
   border-radius: 4px;
 }
 #button-container {
@@ -93,22 +107,34 @@ h2 {
 }
 
 #create-project-btn {
-  font-size: x-large;
+  font-size: 1.4em;
+  font-weight: 600;
   width: 250px;
   height: 45px;
-  margin: 5px;
-  border-radius: 4px;
-  background-color: #5d6d7e;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  background-color: #c7c7cc;
+}
+#create-project-btn:hover {
+  width: 254px;
+  background-color: #f06292;
 }
 
 #projects-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  min-height: 400px;
-  gap: 20px;
-  max-height: 100%;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  /* align-content: center; */
+  width: 98%;
+  /* min-height: 400px; */
+  gap: 5px;
+  /* max-height: 100%; */
+  padding: 5px;
+  padding-bottom: 10px;
+  margin: 20px auto;
+  /* margin-bottom: 30px; */
+  background-color: #424949;
+  border-radius: 6px;
 }
 
 #todo-project-container,
@@ -117,7 +143,6 @@ h2 {
   /* Esto es equivalente a flex-grow: 1, flex-shrink: 1, y flex-basis: 0 */
   /* flex: 1; */
   width: 32%;
-
   position: relative;
   border-radius: 6px;
   padding-top: 90px;
@@ -129,7 +154,8 @@ h2 {
   background-color: #f06292;
 }
 #inprocess-project-container {
-  background-color: #ffcccc;
+  /* background-color: #ffcccc; */
+  background-color: #fff8e1;
 }
 #done-project-container {
   background-color: #ccffcc;
@@ -165,7 +191,7 @@ h2 {
 .project-name {
   width: 70%;
   min-height: 15%;
-  background-color: #e1dede;
+  /* background-color: #e1dede; */
   background-color: rgb(237, 234, 234);
   overflow: hidden;
   /* white-space: nowrap; Evita el salto de línea */
@@ -196,11 +222,23 @@ h2 {
   max-height: 50%;
   border-radius: 2px;
 }
+.project-date {
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  font-size: 0.5em;
+  font-weight: 700;
+  background-color: rgb(237, 234, 234);
+  padding: 3px;
+  border-radius: 2px;
+  /* font-size: 40px !important; */
+}
+
 .trash {
   position: absolute;
   right: 5px;
   top: 10px;
-  font-size: 30px;
+  /* font-size: 30px; */
   font-size: 40px !important;
 }
 
@@ -240,13 +278,15 @@ h2 {
 footer {
   position: absolute;
   background-color: #e1dede;
-  padding: 8px;
+  /* padding: 8px; */
   bottom: 0;
+  left: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 20px;
-  margin-top: 300px;
+  height: 40px;
+  /* margin-top: 300px; */
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
 }
@@ -277,6 +317,20 @@ footer {
   height: auto;
   padding-bottom: 70px;
   word-wrap: break-word;
+}
+.popup .project-date {
+  height: 20px;
+  font-size: 1.2em;
+  position: absolute !important;
+  right: 25px !important;
+  bottom: 15px !important;
+}
+.popupDate {
+  height: 20px;
+  font-size: 1.2em;
+  position: absolute;
+  left: 25px;
+  bottom: 25px !important;
 }
 .close {
   color: red;

@@ -6,12 +6,32 @@ var todoContainer = document.getElementById("todo-project-container");
 var inProcessContainer = document.getElementById("inprocess-project-container");
 var doneContainer = document.getElementById("done-project-container");
 // var limitDateInput = document.getElementById("limit-date-input");
-btnProject.addEventListener('click', createProject);
 inputTitle.addEventListener('keypress', function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
         createProject();
     }
+});
+
+const fields = document.querySelectorAll('#add-project-container input, #add-project-container textarea');
+
+fields.forEach((field, index) => {
+    field.addEventListener('keydown', (e) => {
+        // Solo continúa si la tecla presionada fue Enter
+        if (e.key === "Enter") {
+            e.preventDefault(); // Evita el envío del formulario
+
+            // Mueve el foco al siguiente campo de entrada
+            const nextField = fields[index + 1];
+            if (nextField) {
+                nextField.focus();
+            } else {
+                // Si es el último campo, enfoca el botón de crear
+                createProject();
+                // document.querySelector('#create-project-btn').focus();
+            }
+        }
+    });
 });
 
 function Project(projectTitle, projectName, projectDescription) {
@@ -56,8 +76,8 @@ function createProject() {
         // projectDiv.setAttribute("ondragover", "allowDrop(event)");
         projectDiv.setAttribute("ondragstart","drag(event)");
 
-        let name = createProjectDescription(inputName.value);
-        let title = createProjectDescription(inputTitle.value);
+        let name = createProjectName(inputName.value);
+        let title = createProjectTitle(inputTitle.value);
         let description = createProjectDescription(inputDescription.value);
         name.addEventListener('click', openProject);
         title.addEventListener('click', openProject);
@@ -84,7 +104,9 @@ function createProject() {
         inputTitle.value = '';
         inputName.value = '';
         inputDescription.value = '';
-        // showStateArrow(project.id);
+        let date = createProjectDate(project.projectCreate);
+        console.log("date: ", date);
+        projectDiv.appendChild(date);
 
         localStorage.setItem(project.id, JSON.stringify(project));
         projectDiv.id = project.id;
@@ -151,6 +173,13 @@ function createProjectDescription(projectDescription) {
     span.innerText = projectDescription;
     return span;
 }
+function createProjectDate(projectDate) {
+    let span = document.createElement("span");
+    span.className = "project-date";
+    span.innerText = projectDate.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    // let date = createProjectDate(project.projectCreate.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' }));
+    return span;
+}
 
 
 function showStateArrow(projectId, containerId){   
@@ -173,34 +202,6 @@ function showStateArrow(projectId, containerId){
     }
 }
  
-// function projectState(){
-//     div = this.parentNode;
-//     containerId = div.parentNode.id;
-//     let projectString = localStorage.getItem(div.id);
-//     let projectObj = JSON.parse(projectString);
-
-//     if(projectObj.projectDone == 0){
-//         projectObj.projectDone = 1;
-//         this.parentNode.children[0].classList.toggle("hidden");
-//         inProcessContainer.appendChild(this.parentNode);   
-//     }else if(projectObj.projectDone == 2){
-//         projectObj.projectDone = 1;
-//         this.parentNode.children[4].classList.toggle("hidden");
-//        inProcessContainer.appendChild(this.parentNode);
-//     }else {
-//         // window.alert("No se puede ir más allá");
-//         if(div.children[4].classList[1] = "arrowRight"){
-//             projectObj.projectDone = 2;
-//             this.classList.toggle("hidden");
-//             doneContainer.appendChild(this.parentNode); 
-//         }else if (div.children[0].classList[1] = "arrowLeft"){
-//             projectObj.projectDone = 0;
-//             this.classList.toggle("hidden");
-//             todoContainer.appendChild(this.parentNode); 
-//         }
-//     }
-//     localStorage.setItem(div.id, JSON.stringify(projectObj));
-// }
 
 function projectStateForward() {
     let projectId = this.parentNode.id;
@@ -264,7 +265,7 @@ function createTrashIcon() {
     return span;
 }
 function deleteProject() {
-    let confirmation = window.confirm("¿Deseas borrar definitivamente? Es un proceso irreversible.");
+    let confirmation = window.confirm(`¿Deseas borrar definitivamente ${this.parentNode.children[2].innerHTML}? Es un proceso irreversible.`);
     if(confirmation){
         this.parentNode.remove();
         let projectId = this.parentNode.id;
@@ -273,22 +274,25 @@ function deleteProject() {
         return;
     }
 }
-
 function recoverTaskFromLocalStorage() {
     for (let i = 0; i < localStorage.length; i++) {
-        let projectObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        if((projectObj.id).includes("project-")){
-            let projectHTML = createRecoveredProjectFromLocalStorage(projectObj);
-            if (projectObj.projectDone == 2) {
-                doneContainer.appendChild(projectHTML);
-            }else if(projectObj.projectDone == 1){
-                inProcessContainer.appendChild(projectHTML);
-            } else {
-                todoContainer.appendChild(projectHTML);
-            }
+      let key = localStorage.key(i);
+      if (localStorage.key(i).includes("project-")) {
+        let projectObj = JSON.parse(localStorage.getItem(key));
+        if (projectObj.id.includes("project-")) {
+          let projectHTML = createRecoveredProjectFromLocalStorage(projectObj);
+          if (projectObj.projectDone == 2) {
+            doneContainer.appendChild(projectHTML);
+          } else if (projectObj.projectDone == 1) {
+            inProcessContainer.appendChild(projectHTML);
+          } else {
+            todoContainer.appendChild(projectHTML);
+          }
         }
+      }
     }
-}
+  }
+
 
 function createRecoveredProjectFromLocalStorage(projectObj) {
     let div = document.createElement('div');
@@ -324,8 +328,13 @@ function createRecoveredProjectFromLocalStorage(projectObj) {
     let erase = createTrashIcon();
     div.appendChild(erase);
     erase.addEventListener('click', deleteProject);
+    let fecha = new Date(projectObj.projectCreate);
+    let date = createProjectDate(fecha);
+    div.appendChild(date);
     return div;
 }
+
+
 
 function openProject(event){
     // Obtener el elemento que desencadenó el evento
@@ -343,7 +352,9 @@ function openProject(event){
     enlargedProject.children[0].classList.add('hidden');
     enlargedProject.children[4].classList.add('hidden');
     enlargedProject.children[5].classList.add('hidden');
-    enlargedProject.style.width = '600px'; // Ajustar el ancho según sea necesario
+    enlargedProject.children[6].classList.remove("project-date");
+    enlargedProject.children[6].classList.add('popupDate');
+    enlargedProject.style.width = '800px'; // Ajustar el ancho según sea necesario
     // Agregar el elemento clonado al popup
     popup.appendChild(enlargedProject);
     // Agregar el popup al body del documento
