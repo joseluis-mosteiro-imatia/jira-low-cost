@@ -227,7 +227,7 @@ h2 {
   left: 5px;
   top: 10px;
   font-size: 0.5em;
-  font-weight: 700;
+  font-weight: 800;
   background-color: rgb(237, 234, 234);
   padding: 3px;
   border-radius: 2px;
@@ -318,19 +318,22 @@ footer {
   padding-bottom: 70px;
   word-wrap: break-word;
 }
-.popup .project-date {
+/* .popup .project-date {
   height: 20px;
   font-size: 1.2em;
   position: absolute !important;
   right: 25px !important;
   bottom: 15px !important;
-}
+} */
 .popupDate {
   height: 20px;
   font-size: 1.2em;
   position: absolute;
   left: 25px;
   bottom: 25px !important;
+  background-color: rgb(237, 234, 234);
+  padding: 4px;
+  border-radius: 4px;
 }
 .close {
   color: red;
@@ -339,4 +342,22 @@ footer {
   bottom: 15px;
   cursor: pointer;
   font-size: 50px !important;
+}
+@media (max-width: 1300px) {
+  .project-date {
+    position: absolute;
+    left: 0px;
+    top: -12px;
+    font-size: 0.5em;
+    font-weight: 800;
+    background-color: rgb(237, 234, 234);
+    padding: 3px;
+    border-radius: 2px;
+  }
+  .project {
+    margin-top: 15px;
+  }
+  #name-container input {
+    width: 400px;
+  }
 }

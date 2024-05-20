@@ -344,23 +344,25 @@ function openProject(event){
     var popup = document.createElement('div');
     popup.className = 'popup';
 
-    // Clonar el elemento clickeado y ajustar su tamaño
+    // Clonar el elemento clickeado 
     var enlargedProject = clickedProject.parentNode.cloneNode(true);
     let close = createCloseIcon(); 
     enlargedProject.appendChild(close);
     close.addEventListener('click', deletePopUp);
+    
+    // Ocultar iconos y cambiar de lugar la fecha cambiado clases
     enlargedProject.children[0].classList.add('hidden');
     enlargedProject.children[4].classList.add('hidden');
     enlargedProject.children[5].classList.add('hidden');
     enlargedProject.children[6].classList.remove("project-date");
     enlargedProject.children[6].classList.add('popupDate');
+    // Ajustar su tamaño
     enlargedProject.style.width = '800px'; // Ajustar el ancho según sea necesario
     // Agregar el elemento clonado al popup
     popup.appendChild(enlargedProject);
     // Agregar el popup al body del documento
-    if(document.body.children.id != "popup"){
-
-    }
+    // if(document.body.children.id != "popup"){
+    // }
     document.body.appendChild(popup);
 }
 function createCloseIcon() {
